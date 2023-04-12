@@ -1,19 +1,17 @@
-import Link from 'next/link';
+import Courses from '@/app/components/Courses';
+import { CourseInterface } from '@/interfaces/CourseInterface';
 
-const HomePage = () => {
+const fetchCourses = async (): Promise<CourseInterface[]> => {
+    const response = await fetch('http://localhost:3000/api/courses');
+    return await response.json();
+};
+
+
+const HomePage = async () => {
+    const courses: CourseInterface[] = await fetchCourses();
     return (
-        <div>
-            <ul>
-                <li>
-                    <Link href="/">Home</Link>
-                </li>
-                <li>
-                    <Link href="/about">About</Link>
-                </li>
-                <li>
-                    <Link href="https:google.com">Google</Link>
-                </li>
-            </ul>
+        <div className="home-page">
+            <Courses courses={courses} />
         </div>
     )
 }
