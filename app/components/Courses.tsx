@@ -5,7 +5,7 @@ const Courses = ({ courses }: { courses: CourseInterface[] }): JSX.Element => {
     return (
         <div className="courses">
             {courses.map((course: CourseInterface) => (
-                <Course course={course} />
+                <Course key={course.id} course={course} />
             ))}
         </div>
     );

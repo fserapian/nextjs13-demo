@@ -4,13 +4,13 @@ type Props = {
     dirs: string[];
 }
 
-const RepoDirs =  ({ dirs }: Props) => {
+const RepoDirs = ({ dirs }: Props) => {
     return (
         <div className="repo-dirs">
             <ul>
                 {dirs.map((dir: any) => (
                     <li>
-                        <Link key={dir.path} href={`/code/repos/${name}/${dir.path}`}>
+                        <Link key={dir.path} href={`/code/repos/${dir.name}/${dir.path}`}>
                             {dir.path}
                         </Link>
                     </li>

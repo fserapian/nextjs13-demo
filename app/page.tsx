@@ -1,19 +1,33 @@
+'use client';
 import Courses from '@/app/components/Courses';
 import { CourseInterface } from '@/interfaces/CourseInterface';
+import CourseSearch from '@/app/components/CourseSearch';
+import { useEffect, useState } from 'react';
+import MainLoading from '@/app/loading';
 
-const fetchCourses = async (): Promise<CourseInterface[]> => {
-    const response = await fetch('http://localhost:3000/api/courses');
-    return await response.json();
-};
+const HomePage = (): JSX.Element => {
+    const [courses, setCourses] = useState<CourseInterface[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
 
+    useEffect(() => {
+        fetch('http://localhost:3000/api/courses')
+            .then((res) => res.json())
+            .then((data: CourseInterface[]) => {
+                setCourses(data);
+                setLoading(false);
+            });
+    }, []);
 
-const HomePage = async () => {
-    const courses: CourseInterface[] = await fetchCourses();
+    if (loading) {
+        return <MainLoading />;
+    }
+
     return (
         <div className="home-page">
+            <CourseSearch getSearchResults={(filteredCourses: CourseInterface[]) => setCourses(filteredCourses)} />
             <Courses courses={courses} />
         </div>
-    )
-}
+    );
+};
 
-export default HomePage
+export default HomePage;
